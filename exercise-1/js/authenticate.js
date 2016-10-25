@@ -27,7 +27,7 @@ $(function() {
           }).then(function() {
             window.location = 'index.html';
           }).catch(function() {
-            alert(error.message);
+            alert(error.message); //
           })
         });
 
