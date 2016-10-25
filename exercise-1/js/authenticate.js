@@ -2,15 +2,34 @@
 $(function() {
 
     // Initialize Firebase
+    var config = {
+    apiKey: "AIzaSyDYwi83ExR5iWNFkG84tN2FQYYMowtN-bY",
+    authDomain: "slick-info343.firebaseapp.com",
+    databaseURL: "https://slick-info343.firebaseio.com",
+    storageBucket: "slick-info343.appspot.com",
+    messagingSenderId: "733827679664"
+  };
+  firebase.initializeApp(config);
 
     // Sign Up: Function to create account on firebase, then redirect to index.html
     var signUp = function() {
         // Get email, password, and display name
-
+        var email = $('#email').val();
+        var password = $('#password').val();
+        var dn = $('#display_name').val();
 
         // Create user, then set the user's display name
-
-                // Set display name
+        var auth = firebase.auth();
+        auth.createUserWithEmailAndPassword(email, password).then(function(user){
+          // Set display name
+          user.updateProfile({
+            displayName: dn
+          }).then(function() {
+            window.location = 'index.html';
+          }).catch(function() {
+            alert(error.message);
+          })
+        });
 
     };
 
@@ -32,7 +51,15 @@ $(function() {
     };
 
     // Assign event lister to form submission
-
+    $('form').on('submit', function(event) {
+        event.preventDefault();
+        var formId = $(this).attr('id');
+        if (formId == 'sign-up') { // because authenticate.js file s loaded by all 3 *.html files
+            signUp();
+        } else if (formId == 'sign-in') {
+            signIn();
+        }
+    });
 
 
     // Assign click event to logout button
